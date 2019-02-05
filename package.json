@@ -1,0 +1,23 @@
+{
+  "name": "shaw-and-partners",
+  "version": "0.1.0",
+  "description": "\"App for my carrer\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd front & npm start\" \"cd server & npm run dev\"", 
+    "install-front-deps": "cd front & npm install-app-deps",
+    "install-server-deps": "cd server & npm install-app-deps"
+  },
+  "keywords": [
+    "App",
+    "React",
+    "Node",
+    "Job"
+  ],
+  "author": "Ryan Lucas",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
