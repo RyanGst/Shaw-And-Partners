@@ -2,7 +2,7 @@ const axios = require('axios');
 
 let clientController = {};
 
-//Function top Map user repos
+//Function to Map user repos
 const mapValues = (obj, fn) => Object
     .keys(obj)
     .reduce((acc, k) => {
@@ -13,14 +13,19 @@ clientController.allUsers = (req, res) => {
 
     //Here I will need to implement pagination
     axios
-        .get('https://api.github.com/users')
+        .get(`https://api.github.com/users?per_page=${req.query.per_page}&since=${req.query.since}`)
         .then((response) => {
-            res.json({status: 200, response: response.data})
+
+            //A drowning man will clutch at a straw
+            var link = response.headers.link
+            var slice = link.slice(1)
+            var result = slice.split('>', 1)
+            res.json({status: 200, response: response.data, nextPage: result})
         })
         .catch((e) => {
             console.log(e);
             res.json({status: 400, e})
-        })
+        });
 };
 
 clientController.oneUser = (req, res) => {
@@ -33,11 +38,13 @@ clientController.oneUser = (req, res) => {
             res.json({
                 status: 200,
                 res: {
+                    id: user.id,
                     login: user.login,
                     name: user.name,
                     bio: user.bio,
                     avatar: user.avatar_url,
-                    profile: user.html_url
+                    profile: user.html_url, 
+                    date: user.created_at
                 }
             })
         })

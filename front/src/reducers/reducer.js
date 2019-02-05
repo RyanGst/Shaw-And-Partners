@@ -1,21 +1,21 @@
 import { combineReducers } from "redux";
 import {
-  SELECT_SUBREDDIT,
-  INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS,
-  RECEIVE_POSTS
+  SELECT_USER,
+  INVALIDATE_USER,
+  REQUEST_USER,
+  RECEIVE_USER
 } from "../actions/actions";
 
-function selectedSubreddit(state = "leagueOfLegends", action) {
+function selectedUser(state = "RyanGostosaum", action) {
   switch (action.type) {
-    case SELECT_SUBREDDIT:
-      return action.subreddit;
+    case SELECT_USER:
+      return action.user;
     default:
       return state;
   }
 }
 
-function posts(
+function users(
   state = {
     isFetching: false,
     didInvalidate: false,
@@ -24,16 +24,16 @@ function posts(
   action
 ) {
   switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
+    case INVALIDATE_USER:
       return Object.assign({}, state, {
         didInvalidate: true
       });
-    case REQUEST_POSTS:
+    case REQUEST_USER:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
       });
-    case RECEIVE_POSTS:
+    case RECEIVE_USER:
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
@@ -58,9 +58,23 @@ function postsBySubreddit(state = {}, action) {
   }
 }
 
+
+function postsByUser(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_USER:
+    case RECEIVE_USER:
+    case REQUEST_USER:
+      return Object.assign({}, state, {
+        [action.user]: posts(state[action.user], action)
+      });
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
-  postsBySubreddit,
-  selectedSubreddit
+  postsByUser,
+  selectedUser
 });
 
 export default rootReducer;

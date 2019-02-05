@@ -88,14 +88,14 @@ function fetchUser(user) {
     }
 }
 //TODO:
-function shouldFetchPosts(state, subreddit) {
-    const posts = state.postsBySubreddit[subreddit]
-    if (!posts) {
+function shouldFetchPosts(state, user) {
+    const users = state.postsBySubreddit[user]
+    if (!users) {
         return true
-    } else if (posts.isFetching) {
+    } else if (users.isFetching) {
         return false
     } else {
-        return posts.didInvalidate
+        return users.didInvalidate
     }
 }
 
@@ -104,6 +104,13 @@ export function fetchPostsIfNeeded(subreddit) {
     return (dispatch, getState) => {
         if (shouldFetchPosts(getState(), subreddit)) {
             return dispatch(fetchPosts(subreddit))
+        }
+    }
+}
+export function fetchUsersIfNeeded(user) {
+    return (dispatch, getState) => {
+        if (shouldFetchPosts(getState(), user)) {
+            return dispatch(fetchPosts(user))
         }
     }
 }
