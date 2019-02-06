@@ -7,14 +7,11 @@ import {
     Avatar,
     ListItemText,
     Grid,
-    withStyles,
-    InputBase,
     Button,
     Slide,
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogContentText,
     DialogActions,
     Divider, 
     ListItemIcon, 
@@ -62,7 +59,7 @@ export default class About extends Component {
 
     componentDidMount() {
         Axios
-            .get(`https://s-a-p.herokuapp.com/api/users?per_page=${this.state.per_page}`)
+            .get(`http://localhost:5050/api/users?per_page=${this.state.per_page}`)
             .then(res => {
                 const next = res.data.nextPage[0]
                 const since = next.split('&')[1];
@@ -75,7 +72,7 @@ export default class About extends Component {
 
     info = (user) => {
         Axios
-            .get(`https://s-a-p.herokuapp.com/api/user/details?name=${user.login}`)
+            .get(`http://localhost:5050/api/user/details?name=${user.login}`)
             .then(res => {
                 const data = res.data.res
 
@@ -93,7 +90,7 @@ export default class About extends Component {
 
     table = (user) => {
         Axios
-            .get(`https://api.github.com/users/${user.login}/repos`)
+            .get(`http://localhost:5050/api/user/repos?name=${user.login}`)
             .then(res => {
                 const data = res.data
                 //console.log(data);

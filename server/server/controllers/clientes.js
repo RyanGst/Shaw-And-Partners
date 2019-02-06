@@ -15,11 +15,18 @@ clientController.allUsers = (req, res) => {
             var link = response.headers.link
             var slice = link.slice(1)
             var result = slice.split('>', 1)
-            res.json({status: 200, response: response.data, nextPage: result})
+            res.json({
+                status: 200,
+                response: response.data,
+                nextPage: result
+            })
         })
         .catch((e) => {
             console.log(e);
-            res.json({status: 400, e})
+            res.json({
+                status: 400,
+                e
+            })
         });
 };
 
@@ -38,46 +45,28 @@ clientController.oneUser = (req, res) => {
                     name: user.name,
                     bio: user.bio,
                     avatar: user.avatar_url,
-                    profile: user.html_url, 
+                    profile: user.html_url,
                     date: user.created_at
                 }
             })
         })
         .catch((e) => {
             console.log(e);
-            res.json({status: 400, e})
+            res.json({
+                status: 400,
+                e
+            })
         })
 };
 
 clientController.userRepos = (req, res) => {
-    
-    const mapValues = (obj, fn) => Object
-    .keys(obj)
-    .reduce((acc, k) => {
-        acc[k] = fn(obj[k], k, obj);
-        return acc;
-    }, {});
 
     axios
         .get(`https://api.github.com/users/${req.query.name}/repos?access_token=${token}`)
-        .then((response) => {
+        .then(response => res.json(response.data))
+        .catch(e => res.json({status: 400, e}))
 
-            var repos = response.data
+    // ! Crud básico termina aqui
 
-            const names = mapValues(repos, u => u.name)
-            const id = mapValues(repos, u => u.id)
-            const url = mapValues(repos, u => u.url)
-            
-            res.json({status: 200, res: {
-                    names, id, url
-                }})
-        })
-        .catch((e) => {
-            //console.log(e);
-            res.json({status: 400, e})
-        })
-};
-
-// ! Crud básico termina aqui
-
+}
 module.exports = clientController;
