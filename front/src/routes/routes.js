@@ -12,11 +12,13 @@ const routes = [
         name: "Users",
         icon: "fab fa-github",
         component: About
-    }, {
+    }
+    /*, {
         path: '/details', 
         name: 'Info', 
-        icon: Details 
-    }
+        icon: "fas fa-info-circle", 
+        component: Details
+    }*/
     /* And so on. */
 ];
 

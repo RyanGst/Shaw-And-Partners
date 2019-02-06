@@ -2,18 +2,13 @@ const axios = require('axios');
 
 let clientController = {};
 
+const token = 'a5ac39d1258a73c3416f780c3e58ebc3fadd3d4a'
 //Function to Map user repos
-const mapValues = (obj, fn) => Object
-    .keys(obj)
-    .reduce((acc, k) => {
-        acc[k] = fn(obj[k], k, obj);
-        return acc;
-    }, {});
 clientController.allUsers = (req, res) => {
 
     //Here I will need to implement pagination
     axios
-        .get(`https://api.github.com/users?per_page=${req.query.per_page}&since=${req.query.since}`)
+        .get(`https://api.github.com/users?per_page=${req.query.per_page}&since=${req.query.since}&access_token=${token}`)
         .then((response) => {
 
             //A drowning man will clutch at a straw
@@ -31,7 +26,7 @@ clientController.allUsers = (req, res) => {
 clientController.oneUser = (req, res) => {
 
     axios
-        .get(`https://api.github.com/users/${req.query.name}`)
+        .get(`https://api.github.com/users/${req.query.name}?access_token=${token}`)
         .then((response) => {
 
             var user = response.data
@@ -55,15 +50,26 @@ clientController.oneUser = (req, res) => {
 };
 
 clientController.userRepos = (req, res) => {
+    
+    const mapValues = (obj, fn) => Object
+    .keys(obj)
+    .reduce((acc, k) => {
+        acc[k] = fn(obj[k], k, obj);
+        return acc;
+    }, {});
+
     axios
-        .get(`https://api.github.com/users/${req.query.name}/repos`)
+        .get(`https://api.github.com/users/${req.query.name}/repos?access_token=${token}`)
         .then((response) => {
+
             var repos = response.data
 
-            const index = mapValues(repos, u => u.name)
-            console.log(index);
+            const names = mapValues(repos, u => u.name)
+            const id = mapValues(repos, u => u.id)
+            const url = mapValues(repos, u => u.url)
+            
             res.json({status: 200, res: {
-                    index
+                    names, id, url
                 }})
         })
         .catch((e) => {
