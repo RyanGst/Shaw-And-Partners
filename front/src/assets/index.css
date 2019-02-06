@@ -33,6 +33,12 @@
     text-align: center;
 }
 
+.modal {
+    max-width: 400px;
+    max-height: 250px;
+    min-width: 400px;
+    min-height: 250px;
+}
 .content {
     width: 100%;
     margin: 10px;
@@ -63,9 +69,22 @@
         padding: 18px;
     }
 
+    .modal {
+        max-width: 250px;
+        max-height: 200px;
+        min-width: 200px;
+        min-height: 350px;
+    }
     .listContainer {
         margin-left: 9%;
         padding: 5px;
+    }
+
+    .pagination {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
     }
 
     .unList {
@@ -78,6 +97,10 @@
     .unList li {
         margin: 0;
         padding: 0;
+        max-height: 109px;
+        max-width: 250px;
+        min-height: 109px;
+        min-width: 20px;
     }
     .modal #img {
         height: 100;
@@ -89,4 +112,21 @@
         text-align: center;
         font-size: 0.9rem;
     }
+}
+
+.pagination ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+}
+.pagination li {
+    float: left;
+}
+  
+.pagination li a {
+    display: block;
+    color: white;
+    text-align: center;
 }

@@ -15,49 +15,24 @@ import {
     DialogTitle,
     DialogContent,
     DialogContentText,
-    DialogActions
+    DialogActions,
+    Divider, 
+    ListItemIcon, 
+    Collapse
 } from '@material-ui/core';
 import Axios from 'axios';
 
-// import { Container } from './styles';
-const BootstrapInput = withStyles(theme => ({
+const styles = theme => ({
     root: {
-        'label + &': {
-            marginTop: theme.spacing.unit * 3
-        }
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
     },
-    input: {
-        borderRadius: 4,
-        position: 'relative',
-        backgroundColor: theme.palette.background.paper,
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        width: 'auto',
-        padding: '10px 26px 10px 12px',
-        transition: theme
-            .transitions
-            .create(['border-color', 'box-shadow']),
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"'
-        ].join(','),
-        '&:focus': {
-            borderRadius: 4,
-            borderColor: '#80bdff',
-            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)'
-        }
-    }
-}))(InputBase);
-
+    nested: {
+      paddingLeft: theme.spacing.unit * 4,
+    },
+  });
+  
 function Transition(props) {
     return <Slide direction="up" {...props}/>;
 }
@@ -80,7 +55,9 @@ export default class About extends Component {
         this.addMoreUsers = this
             .addMoreUsers
             .bind(this)
-        this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this
+            .handleClick
+            .bind(this)
     }
 
     componentDidMount() {
@@ -110,9 +87,9 @@ export default class About extends Component {
     handleClick(event) {
 
         this.setState({
-          currentPage: Number(event.target.id)
+            currentPage: Number(event.target.id)
         });
-      }
+    }
 
     table = (user) => {
         Axios
@@ -157,7 +134,7 @@ export default class About extends Component {
     };
 
     render() {
-
+        const { classes } = this.props;
         const {users, details, repos, currentPage, reposPerPage} = this.state
 
         const indexOfLastClient = currentPage * reposPerPage;
@@ -166,11 +143,19 @@ export default class About extends Component {
 
         const render = currentUsers.map((repo, index) => {
             return (
-                <ul className='unList' key={index}>
-                    <li>{repo.id}</li>
-                    <li>{repo.name}</li>
-                    <li><a href={repo.html_url}><i className="fas fa-link"></i></a></li>
-                </ul>
+                <Grid spacing={12}>
+                    <List component="nav" key={index}>
+                        <List component="nav">
+                            <ListItem button onClick={this.handleChildOpen}>
+                                <ListItemIcon>
+                                    <i className="fas fa-code-branch"/>
+                                </ListItemIcon>
+                                <ListItemText inset primary={repo.name}/>
+                                </ListItem>
+                        </List>
+                    </List>
+                </Grid>
+
             )
         })
 
@@ -184,7 +169,8 @@ export default class About extends Component {
                 <li
                     style={{
                     float: "left",
-                    padding: 9
+                    padding: 9,
+                    display: 'inline'
                 }}
                     key={number}
                     id={number}
@@ -195,7 +181,7 @@ export default class About extends Component {
         });
 
         const data = users
-
+        const {fullScreen} = this.props;
         const list = data.map((user, index) => {
             return (
                 <div className="content">
@@ -257,7 +243,6 @@ export default class About extends Component {
                                         </Grid>
                                     </Grid>
                                 </div>
-
                             </DialogContent>
                             <DialogActions>
                                 <Button target="_blank" href={details.profile} color="primary">
@@ -270,28 +255,22 @@ export default class About extends Component {
                             </DialogActions>
                         </Dialog>
                         <Dialog
+                            fullScreen={fullScreen}
                             open={this.state.openTable}
-                            TransitionComponent={Transition}
-                            keepMounted
                             onClose={this.handleClose}
-                            aria-labelledby="alert-dialog-slide-title"
-                            aria-describedby="alert-dialog-slide-description">
+                            aria-labelledby="responsive-dialog-title">
+                            <DialogTitle id="responsive-dialog-title">{"Public Repos"}</DialogTitle>
                             <DialogContent>
-                                <div className="modal">
-                                    <Grid container spacing={24}>
-                                        {render}
-                                    </Grid >
-                                </div>
-                                <ul className="unList" >
-                                {renderPageNumbers}
-                                </ul>
-                                
+                                {render}
                             </DialogContent>
+                            <ul className="pagination">
+                                {renderPageNumbers} 
+                            </ul>
+                           
                             <DialogActions>
-                                <Button onClick={this.handleTableClose} color="primary">
+                                <Button onClick={this.handleTableClose} color="primary" autoFocus>
                                     Close
                                 </Button>
-
                             </DialogActions>
                         </Dialog>
                     </List>
