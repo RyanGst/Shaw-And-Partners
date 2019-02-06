@@ -1,39 +1,52 @@
-html {
-    max-width: 100vw;
+.header {
+    text-align: center;
+    align-self: center;
 }
 
-.header {
-    left: 25vw;
-    color: #010101;
+#container {
+    height: 100%;
 }
 
 .container {
-    position: relative; 
-    display: inline;
+    width: 100%;
+}
+.listContainer {
+    display: inline-block;
+    margin-left: 29vw;
+    padding: 60px;
 }
 
+.tooltip button{
+    margin-left: 5px
+}
+
+.select{
+    padding: 25px
+}
+
+.content ul li{
+    border: 1px solid #cccccc;
+    border-radius: 50px;
+    padding-top: 15px; 
+    padding-bottom: 15px;
+    text-align: center
+}
+
+.content {
+    width: 100%;
+    margin: 10px;
+}
+
+.content span {
+    text-align: center
+}
 @media (max-width: 600px) {
-    .container {
-        display: inline-block;
-        position: relative;
-        width: 100%;
-    }
     .header {
-        left: 10vw;
-        color: #010101;
+        font-size: 1.5rem;
+        padding: 18px;
     }
-    .content {
-        display: block;
-        width: 100vw;
-        
-    }
-    .content ul {
-        display: block;
-        max-width: 100vw;
-    }
-    .content a {
-        display: inline-block;
-        position: relative;
-        line-break: loose;
+    .listContainer {
+        margin-left: 9%;
+        padding: 5px;
     }
 }

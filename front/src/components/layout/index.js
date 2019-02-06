@@ -30,7 +30,7 @@ const styles = theme => ({
         ]: {
             width: drawerWidth,
             flexShrink: 0
-        }, 
+        }
     },
     appBar: {
         marginLeft: drawerWidth,
@@ -49,25 +49,44 @@ const styles = theme => ({
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-        width: drawerWidth, 
+        width: drawerWidth,
         padding: 10
     },
     content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
         backgroundColor: '#eef0f2'
-    }, 
+    },
     itens: {
         marginTop: 10,
-        borderRadius: 25,
+        borderRadius: 25
     }
 });
 
 class Sidebar extends React.Component {
     state = {
-        mobileOpen: false
+        mobileOpen: false,
+        height: 0, 
+        width: 0
     };
 
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        try {
+            this.setState({width: window.innerWidth, height: window.innerHeight});
+        } catch (e) {
+            console.log(e);
+        }
+        
+    }
     handleDrawerToggle = () => {
         this.setState(state => ({
             mobileOpen: !state.mobileOpen
@@ -88,9 +107,9 @@ class Sidebar extends React.Component {
                             <IconButton>
                                 <i className={route.icon}></i>
                             </IconButton>
-                          
-                                {route.name}
-                       
+
+                            {route.name}
+
                         </MenuItem>
                     ))}
 
@@ -137,7 +156,12 @@ class Sidebar extends React.Component {
                             </Drawer>
                         </Hidden>
                     </nav>
-                    <main className={classes.content}>
+                    <main
+                        id="container"
+                        style={{
+                        height: this.state.height
+                    }}
+                        className={classes.content}>
                         <div className={classes.toolbar}/> {this.props.children}
                     </main>
                 </CssBaseline>

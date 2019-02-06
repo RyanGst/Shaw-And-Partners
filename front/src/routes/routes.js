@@ -1,22 +1,21 @@
 import Home from "../views/Home.js";
 import About from "../views/About.js";
-import Reddit from "../views/Reddit.js";
+import Details from "../views/OneUser.js"
 const routes = [
     {
         path: '/',
         name: "Home",
-        icon: "fab fa-houzz",
+        icon: "fas fa-home",
         component: Home
     }, {
-        path: '/about',
-        name: "About",
-        icon: "fas fa-journal-whills",
+        path: '/git',
+        name: "Users",
+        icon: "fab fa-github",
         component: About
     }, {
-        path: "/r", 
-        name: "Reddit Fetch", 
-        icon: "fab fa-reddit", 
-        component: Reddit
+        path: '/details', 
+        name: 'Info', 
+        icon: Details 
     }
     /* And so on. */
 ];
