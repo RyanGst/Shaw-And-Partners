@@ -1,6 +1,5 @@
 import Home from "../views/Home.js";
 import About from "../views/About.js";
-import Details from "../views/OneUser.js"
 const routes = [
     {
         path: '/',

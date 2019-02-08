@@ -59,14 +59,34 @@
     text-align: center;
 }
 
+
+.profileImg{
+    width: 150px; 
+    height: 150px;
+    border-radius: 75px
+}
+
 .unList li {
     cursor: pointer;
     padding: 15;
+}
+
+.spinner {
+    left: 50%;
+}
+.spinner{
+    left: 50%;
 }
 @media (max-width: 600px) {
     .header {
         font-size: 1.5rem;
         padding: 18px;
+    }
+
+    .profileImg{
+        width: 100px; 
+        height: 100px;
+        border-radius: 50px
     }
 
     .modal {
@@ -112,6 +132,7 @@
         text-align: center;
         font-size: 0.9rem;
     }
+
 }
 
 .pagination ul {
