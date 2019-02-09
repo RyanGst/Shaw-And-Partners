@@ -18,6 +18,7 @@ import {
     Collapse,
     CircularProgress
 } from '@material-ui/core';
+import {Link} from 'react-router-dom';
 import Axios from 'axios';
 
 const styles = theme => ({
@@ -108,14 +109,16 @@ export default class About extends Component {
         const list = data.map((user, index) => {
             return (
                 <div className="content">
-                    <List component="nav">
-                        <ListItem button>
-                            <ListItemIcon>
-                                <img className="profileImg" src={user.avatar_url}></img>
-                            </ListItemIcon>
-                            <ListItemText primary={user.login}/>
-                        </ListItem>
-                    </List>
+                    <Link to={`/user/${user.login}`}>
+                        <List component="nav">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <img className="profileImg" src={user.avatar_url}></img>
+                                </ListItemIcon>
+                                <ListItemText primary={user.login}/>
+                            </ListItem>
+                        </List>
+                    </Link>
                 </div>
             )
         })
@@ -126,14 +129,16 @@ export default class About extends Component {
                 </Grid>
                 <Grid container xl={24}>
                     {this.state.isFetching
-                        ? <Button className="spinner" variant="flat" onClick={this.addMoreUsers} color="secondary">
+                        ? <Button
+                                className="spinner"
+                                variant="flat"
+                                onClick={this.addMoreUsers}
+                                color="secondary">
                                 <i className="fas fa-plus"></i>
                             </Button>
-
                         : <div >
                             <CircularProgress className="spinner"/>
-                            </div>
-}
+                        </div>}
                 </Grid>
             </Card>
         );

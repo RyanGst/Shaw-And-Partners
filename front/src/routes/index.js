@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Route, BrowserRouter} from "react-router-dom";
 import routes from "./routes.js";
 import Sidebar from "../components/layout/index.js";
+import Profile from "../views/Profile.js"
 class AppRoutes extends Component {
 
     render() {
@@ -16,6 +17,7 @@ class AppRoutes extends Component {
                     <div>
                         <div className="content">
                             {routeComponents}
+                            <Route path="/user/:userName" component={Profile}></Route>
                         </div>
                     </div>
                 </Sidebar>
