@@ -1,6 +1,6 @@
 import Home from "../views/Home.js";
 import About from "../views/About.js";
-
+import SearchScreen from "../views/Search.js"
 const routes = [
     {
         path: '/',
@@ -12,6 +12,11 @@ const routes = [
         name: "Users",
         icon: "fab fa-github",
         component: About
+    }, {
+        path: '/search',
+        name: "Search",
+        icon: "fab fa-houzz",
+        component: SearchScreen
     }
      
     /* And so on. */

@@ -1,66 +1,19 @@
-import { combineReducers } from "redux";
-import {
-  SELECT_SUBREDDIT,
-  INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS,
-  RECEIVE_POSTS
-} from "../actions/actions";
 
-function selectedSubreddit(state = "RyanGostosaum", action) {
-  switch (action.type) {
-    case SELECT_SUBREDDIT:
-      return action.subreddit;
-    default:
-      return state;
-  }
-}
+import {types} from '../actions/actions.js';
 
-function posts(
-  state = {
-    isFetching: false,
-    didInvalidate: false,
-    items: []
-  },
-  action
-) {
-  switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
-      return Object.assign({}, state, {
-        didInvalidate: true
-      });
-    case REQUEST_POSTS:
-      return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
-      });
-    case RECEIVE_POSTS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        didInvalidate: false,
-        items: action.posts,
-        lastUpdated: action.receivedAt
-      });
-    default:
-      return state;
-  }
-}
+const initState = {
+    user: null
+};
 
-function postsBySubreddit(state = {}, action) {
-  switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
-    case RECEIVE_POSTS:
-    case REQUEST_POSTS:
-      return Object.assign({}, state, {
-        [action.subreddit]: posts(state[action.subreddit], action)
-      });
-    default:
-      return state;
-  }
-}
+export const userReducer = (state = initState, action) => {
+    switch (action.type) {
+        case types.LOAD_USER_DATA_SUCCESS:
+            return {
+                ...state,
+                user: action.data
+            };
 
-const rootReducer = combineReducers({
-  postsBySubreddit,
-  selectedSubreddit
-});
-
-export default rootReducer;
+        default:
+            return state;
+    }
+};

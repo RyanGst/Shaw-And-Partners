@@ -44,9 +44,9 @@ module.exports = () => {
     consign({
             cwd: '../server'
         })
-        .include('models')
-        .include('controllers')
-        .then('routes')
+
+        .include('controllers/')
+        .then('routes/')
 
         .into(app);
 
