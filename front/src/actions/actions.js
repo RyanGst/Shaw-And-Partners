@@ -1,18 +1,35 @@
+import Axios from "axios";
 
+export const FETCH_USERS_BEGIN = 'FETCH_USERS_BEGIN';
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
+export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 
-export const types = {
-    LOAD_USER_DATA: 'LOAD_USER_DATA',
-    LOAD_USER_DATA_SUCCESS: 'LOAD_USER_DATA_SUCCESS'
-};
+export function fetchUsers() {
+    return dispatch => {
+        dispatch(fetchUsersBegin());
+        return Axios.get("https://api.github.com/users")
+            .then(res => {
+                var resp = res
+                dispatch(fetchUsersSuccess(resp));
+                return resp;
+            })
+            .catch(error => dispatch(fetchUsersFailure(error)));
+    };
+}
 
-export const actions = ({
-    loadUserData: name => ({
-        type: types.LOAD_USER_DATA,
-        name
-    }),
+// Handle HTTP errors since fetch won't.
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
+export const fetchUsersBegin = () => ({type: FETCH_USERS_BEGIN});
 
-    loadUserDataSuccess: data => ({
-        type: types.LOAD_USER_DATA_SUCCESS,
-        data
-    })
-});
+export const fetchUsersSuccess = USERS => ({type: FETCH_USERS_SUCCESS, payload: {
+        USERS
+    }});
+
+export const fetchUsersFailure = error => ({type: FETCH_USERS_FAILURE, payload: {
+        error
+    }});
