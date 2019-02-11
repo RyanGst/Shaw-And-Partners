@@ -3,24 +3,17 @@ import {
     Card,
     List,
     ListItem,
-    ListItemAvatar,
-    Avatar,
     ListItemText,
     Grid,
     Button,
     Slide,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Divider,
     ListItemIcon,
-    Collapse,
     CircularProgress
 } from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import Axios from 'axios';
-
+import {fetchUsers} from '../actions/actions.js';
+import {connect} from 'react-redux';
 const styles = theme => ({
     root: {
         width: '100%',
@@ -36,7 +29,7 @@ function Transition(props) {
     return <Slide direction="up" {...props}/>;
 }
 
-export default class About extends Component {
+class About extends Component {
     constructor() {
         super()
         this.state = {
@@ -58,16 +51,9 @@ export default class About extends Component {
     }
 
     componentDidMount() {
-        Axios
-            .get(`http://localhost:5050/api/users?per_page=${this.state.per_page}`)
-            .then(res => {
-                const next = res.data.nextPage[0]
-                const since = next.split('&')[1];
-                //console.log(since);
-                this.setState({since})
-                const users = res.data.response;
-                this.setState({users});
-            });
+        this
+        .props
+        .dispatch(fetchUsers());
     }
 
     addMoreUsers = () => {
@@ -103,9 +89,16 @@ export default class About extends Component {
     }
 
     render() {
-        const {users} = this.state
+        const {error, loading, users} = this.props;
+        const data = users.items
+        if (error) {
+            return <div>Error! {error.message}</div>;
+        }
 
-        const data = users
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+
         const list = data.map((user, index) => {
             return (
                 <div className="content">
@@ -144,3 +137,6 @@ export default class About extends Component {
         );
     }
 }
+const mapStateToProps = state => ({users: state.rootReducer});
+
+export default connect(mapStateToProps)(About);

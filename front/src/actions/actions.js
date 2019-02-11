@@ -7,11 +7,27 @@ export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 export function fetchUsers() {
     return dispatch => {
         dispatch(fetchUsersBegin());
-        return Axios.get("https://api.github.com/users")
+        return Axios
+            .get("https://api.github.com/users")
             .then(res => {
-                var resp = res
-                dispatch(fetchUsersSuccess(resp));
-                return resp;
+                console.log(res.headers.link);
+                dispatch(fetchUsersSuccess(res));
+                return res;
+            })
+            .catch(error => dispatch(fetchUsersFailure(error)));
+    };
+}
+
+export function fetchMoreUsers(since) {
+
+    return dispatch => {
+        dispatch(fetchUsersBegin());
+        return Axios
+            .get(`https://api.github.com/users?since=${since}`)
+            .then(res => {
+
+                dispatch(fetchUsersSuccess(res));
+                return res;
             })
             .catch(error => dispatch(fetchUsersFailure(error)));
     };
@@ -29,7 +45,6 @@ export const fetchUsersBegin = () => ({type: FETCH_USERS_BEGIN});
 export const fetchUsersSuccess = USERS => ({type: FETCH_USERS_SUCCESS, payload: {
         USERS
     }});
-
 export const fetchUsersFailure = error => ({type: FETCH_USERS_FAILURE, payload: {
         error
     }});
