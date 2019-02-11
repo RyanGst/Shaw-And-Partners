@@ -3,9 +3,6 @@ const clientController = require('../controllers/clientes');
 
 const bodyParser = require('body-parser');
 
-//const upload = multer({ dest: '../../uploads' });
-const checkAuth = require('../middleware/check-auth')
-
 //? BP stuff parse various different custom JSON types as JSON
 routes.use(bodyParser.json())
 routes.use(bodyParser.urlencoded({extended: false}));

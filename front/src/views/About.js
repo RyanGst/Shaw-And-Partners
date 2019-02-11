@@ -11,9 +11,9 @@ import {
     CircularProgress
 } from '@material-ui/core';
 import {Link} from 'react-router-dom';
-import Axios from 'axios';
-import {fetchUsers} from '../actions/actions.js';
+import {fetchUsers, fetchMoreUsers} from '../actions/actions.js';
 import {connect} from 'react-redux';
+
 const styles = theme => ({
     root: {
         width: '100%',
@@ -56,40 +56,15 @@ class About extends Component {
         .dispatch(fetchUsers());
     }
 
-    addMoreUsers = () => {
-        this.setState(prevState => ({
-            isFetching: !prevState.isFetching
-        }));
-        //console.log();
-        Axios
-            .get(`https://s-a-p.herokuapp.com/api/users?per_page=${this.state.per_page}&${this.state.since}`)
-            .then(res => {
-                const next = res.data.nextPage[0]
-                const since = next.split('&')[1];
-                //console.log(since);
-                this.setState({since})
-                const users = res.data.response;
-                var a = this
-                    .state
-                    .users
-                    .concat(users)
-                this.setState({users: a});
-            });
-
-        this.setState((prevState) => ({
-            per_page: prevState.per_page + 2
-        }));
-
-        setTimeout(() => {
-            this.setState(prevState => ({
-                isFetching: !prevState.isFetching
-            }));
-        }, 2000);
-
+    addMoreUsers = (link) => {
+        const since = link.split("&")
+        this
+        .props
+        .dispatch(fetchMoreUsers(since[1]));
     }
 
     render() {
-        const {error, loading, users} = this.props;
+        const {error, loading, users, next} = this.props;
         const data = users.items
         if (error) {
             return <div>Error! {error.message}</div>;
@@ -125,7 +100,7 @@ class About extends Component {
                         ? <Button
                                 className="spinner"
                                 variant="flat"
-                                onClick={this.addMoreUsers}
+                                onClick={() => this.addMoreUsers(this.props.next.util)}
                                 color="secondary">
                                 <i className="fas fa-plus"></i>
                             </Button>
@@ -137,6 +112,6 @@ class About extends Component {
         );
     }
 }
-const mapStateToProps = state => ({users: state.rootReducer});
+const mapStateToProps = state => ({users: state.rootReducer, next: state.rootReducer});
 
 export default connect(mapStateToProps)(About);

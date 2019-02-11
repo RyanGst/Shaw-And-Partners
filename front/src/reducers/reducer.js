@@ -13,8 +13,7 @@ import {
   export default function rootReducer(state = initialState, action) {
     switch(action.type) {
       case FETCH_USERS_BEGIN:
-        // Mark the state as "loading" so we can show a spinner or something
-        // Also, reset any errors. We're starting fresh.
+        // Mark the state as "loading"
         return {
           ...state,
           loading: true,
@@ -22,19 +21,16 @@ import {
         };
   
       case FETCH_USERS_SUCCESS:
-        // All done: set loading "false".
-        // Also, replace the items with the ones from the server
         return {
           ...state,
           loading: false,
-          items: action.payload.USERS.data
+          items: action.payload.USERS.response, 
+          util: action.payload.USERS.nextPage[0]
         };
   
       case FETCH_USERS_FAILURE:
-        // The request failed. It's done. So set loading to "false".
-        // Save the error, so we can display it somewhere.
+        // The request failed. It's done, Loading to "false".
 
-        // Do whatever seems right for your use case.
         return {
           ...state,
           loading: false,
@@ -43,7 +39,7 @@ import {
         };
   
       default:
-        // ALWAYS have a default case in a reducer
+        // ALWAYS
         return state;
     }
   }

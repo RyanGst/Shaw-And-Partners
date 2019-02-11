@@ -8,11 +8,10 @@ export function fetchUsers() {
     return dispatch => {
         dispatch(fetchUsersBegin());
         return Axios
-            .get("https://api.github.com/users")
+            .get("http://localhost:5050/api/users/")
             .then(res => {
-                console.log(res.headers.link);
-                dispatch(fetchUsersSuccess(res));
-                return res;
+                dispatch(fetchUsersSuccess(res.data))
+                return res.data;
             })
             .catch(error => dispatch(fetchUsersFailure(error)));
     };
@@ -23,9 +22,9 @@ export function fetchMoreUsers(since) {
     return dispatch => {
         dispatch(fetchUsersBegin());
         return Axios
-            .get(`https://api.github.com/users?since=${since}`)
+            .get(`https://api.github.com/users?${since}`)
             .then(res => {
-
+                console.log(res);
                 dispatch(fetchUsersSuccess(res));
                 return res;
             })
@@ -34,12 +33,6 @@ export function fetchMoreUsers(since) {
 }
 
 // Handle HTTP errors since fetch won't.
-function handleErrors(response) {
-    if (!response.ok) {
-        throw Error(response.statusText);
-    }
-    return response;
-}
 export const fetchUsersBegin = () => ({type: FETCH_USERS_BEGIN});
 
 export const fetchUsersSuccess = USERS => ({type: FETCH_USERS_SUCCESS, payload: {
