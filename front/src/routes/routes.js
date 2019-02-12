@@ -1,6 +1,5 @@
 import Home from "../views/Home.js";
 import About from "../views/About.js";
-import Search from "../views/Search.js"
 const routes = [
     {
         path: '/',
@@ -13,7 +12,6 @@ const routes = [
         icon: "fab fa-github",
         component: About
     }
-    /* And so on. */
 ];
 
 export default routes;
