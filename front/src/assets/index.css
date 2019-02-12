@@ -77,7 +77,30 @@
 .spinner{
     left: 50%;
 }
+.MuiAvatar-root-213 {
+    margin-top: 20px;
+    width: 250px !important;
+    height: 250px !important;
+}
+.textContent {
+    padding: 20px;
+    width: 100%; 
+    text-align: center
+}
+.textContent a {
+    text-decoration: none;
+    color: black
+}
+
+.reposContent {
+    margin-top: 20px;
+}
 @media (max-width: 600px) {
+    .MuiAvatar-root-213 {
+        margin-top: 20px;
+        width: 150px !important;
+        height: 150px !important;
+    }
     .header {
         font-size: 1.5rem;
         padding: 18px;

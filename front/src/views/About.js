@@ -90,6 +90,8 @@ class About extends Component {
                 </div>
             )
         })
+
+        
         return (
             <Card container>
                 <Grid container spacing={12}>
