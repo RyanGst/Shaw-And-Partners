@@ -3,6 +3,8 @@
 
 `Ryan Lucas`
 
+Live app [here](https://full-stack-contest-v2.herokuapp.com/)
+
 REPO FOR REDUX LEARNING
 
 
