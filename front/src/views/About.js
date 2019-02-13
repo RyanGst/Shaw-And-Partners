@@ -33,16 +33,6 @@ class About extends Component {
     constructor() {
         super()
         this.state = {
-            per_page: 30,
-            number: 15,
-            users: [],
-            open: false,
-            openTable: false,
-            details: [],
-            since: 0,
-            repos: [],
-            currentPage: 1,
-            reposPerPage: 3,
             isFetching: true
         };
         this.addMoreUsers = this
@@ -51,9 +41,11 @@ class About extends Component {
     }
 
     componentDidMount() {
+
         this
         .props
         .dispatch(fetchUsers());
+        
     }
 
     addMoreUsers = (link) => {
@@ -73,7 +65,7 @@ class About extends Component {
         if (loading) {
             return <div>Loading...</div>;
         }
-
+        console.log(data);
         const list = data.map((user, index) => {
             return (
                 <div className="content">

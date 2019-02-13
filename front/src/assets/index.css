@@ -77,11 +77,6 @@
 .spinner{
     left: 50%;
 }
-.MuiAvatar-root-213 {
-    margin-top: 20px;
-    width: 250px !important;
-    height: 250px !important;
-}
 #content {
     margin-top: 20px;
     background-color: #f4f4f4;
@@ -120,8 +115,22 @@
     text-decoration: none;
     color: black
 }
+.Profile {
+    margin-top: 20px;
+    width: 100% !important;
+    height: 250px !important;
+}
+
+.Profile div{
+    width: 250px !important;
+    height: 250px !important;
+}
 @media (max-width: 600px) {
-    .MuiAvatar-root-213 {
+    .Profile {
+        width: 100% !important;
+        height: 150px !important;
+    }
+    .Profile div{
         width: 150px !important;
         height: 150px !important;
     }

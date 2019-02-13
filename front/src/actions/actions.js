@@ -5,9 +5,9 @@ export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 export const FETCH_AND_SET_USERS = "FETCH_AND_SET_USERS";
 
-export const FETCH_SPECIFIC_USER_BEGIN = 'ETCH_SPECIFIC_USER_BEGIN';
-export const FETCH_SPECIFIC_USER_SUCCESS = 'ETCH_SPECIFIC_USER_SUCCESS';
-export const FETCH_SPECIFIC_USER_FAILURE = 'ETCH_SPECIFIC_USER_FAILURE';
+export const FETCH_SPECIFIC_USER_BEGIN = 'FETCH_SPECIFIC_USER_BEGIN';
+export const FETCH_SPECIFIC_USER_SUCCESS = 'FETCH_SPECIFIC_USER_SUCCESS';
+export const FETCH_SPECIFIC_USER_FAILURE = 'FETCH_SPECIFIC_USER_FAILURE';
 
 export function fetchUsers() {
     return dispatch => {
@@ -28,7 +28,7 @@ export function fetchSpecificUser(user) {
         return Axios
             .get(`http://localhost:5050/api/user/details?name=${user}`)
             .then(res => {
-                console.log(res);
+                console.log(res.data);
                 dispatch(fetchSpecificUserSuccess(res.data))
                 return res.data;
             })

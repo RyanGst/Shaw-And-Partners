@@ -29,6 +29,7 @@ class Profile extends Component {
     render() {
         const {user} = this.props
         const {repos} = this.state
+
         const repoList = repos.map((r) => {
             return (
                 <Card id="content">
@@ -49,7 +50,7 @@ class Profile extends Component {
             <Card>
                 <Grid spacing={24}>
                     <Grid item spacing={12}>
-                        <Grid container justify="center" alignItems="center">
+                        <Grid className="Profile" container justify="center" alignItems="center">
                             <Avatar alt={user.items.name} src={user.items.avatar}/>
                         </Grid>
                         <div className="textContent">

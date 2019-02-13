@@ -43,7 +43,6 @@ export default function rootReducer(state = initialState, action) {
             }
         case FETCH_USERS_FAILURE:
             // The request failed. It's done, Loading to "false".
-
             return {
                 ...state,
                 loading: false,
