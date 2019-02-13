@@ -8,8 +8,8 @@
     "front": "cd front & npm run dev",
     "server": "cd server & npm start",
     "start": "concurrently \"npm run front\" \"npm run server\"",
-    "install-front-deps": "cd front & npm install-app-deps",
-    "install-server-deps": "cd server & npm install-app-deps"
+    "install-front": "cd front & npm install",
+    "install-server": "cd server & npm install"
   },
   "keywords": [
     "App",

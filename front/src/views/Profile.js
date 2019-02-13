@@ -12,9 +12,12 @@ class Profile extends Component {
         }
     }
     componentDidMount() {
+        
         this
         .props
         .dispatch(fetchSpecificUser(this.props.match.params.userName));
+
+
         setTimeout(() => {
             Axios
             .get(`http://localhost:5050/api/user/repos?name=${this.props.match.params.userName}`)
@@ -27,9 +30,9 @@ class Profile extends Component {
         
     }
     render() {
-        const {user} = this.props
+        const {current} = this.props
         const {repos} = this.state
-
+        console.log(current);
         const repoList = repos.map((r) => {
             return (
                 <Card id="content">
@@ -51,12 +54,12 @@ class Profile extends Component {
                 <Grid spacing={24}>
                     <Grid item spacing={12}>
                         <Grid className="Profile" container justify="center" alignItems="center">
-                            <Avatar alt={user.items.name} src={user.items.avatar}/>
+                            <Avatar alt={current.name} src={current.avatar}/>
                         </Grid>
                         <div className="textContent">
-                            <h4>Name: {user.items.name}</h4>
-                            <h4>Login: {user.items.login}</h4>
-                            <a href={user.items.profile} target="_blank">Profile Link</a>
+                            <h4>Name: {current.name}</h4>
+                            <h4>Login: {current.login}</h4>
+                            <a href={current.profile} target="_blank">Profile Link</a>
                         </div>
                     </Grid>
                 </Grid>
@@ -67,6 +70,6 @@ class Profile extends Component {
         );
     }
 }
-const mapStateToProps = state => ({user: state.rootReducer});
+const mapStateToProps = state => ({current: state.rootReducer.current});
 
 export default connect(mapStateToProps)(Profile);

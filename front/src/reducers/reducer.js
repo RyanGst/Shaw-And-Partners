@@ -11,7 +11,8 @@ import {
 const initialState = {
     items: [],
     loading: false,
-    error: null
+    error: null, 
+    current: []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -49,6 +50,7 @@ export default function rootReducer(state = initialState, action) {
                 error: action.payload.error,
                 items: []
             };
+            
         case FETCH_SPECIFIC_USER_BEGIN:
             return {
 
@@ -62,7 +64,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                items: action.payload.USER.res
+                current: action.payload.USER.res
             };
 
         case FETCH_SPECIFIC_USER_FAILURE:
@@ -70,7 +72,7 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 error: action.payload.error,
-                items: []
+                current: []
             };
 
         default:
