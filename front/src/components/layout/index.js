@@ -85,8 +85,8 @@ class Sidebar extends React.Component {
         } catch (e) {
             console.log(e);
         }
-        
     }
+    
     handleDrawerToggle = () => {
         this.setState(state => ({
             mobileOpen: !state.mobileOpen
@@ -101,18 +101,14 @@ class Sidebar extends React.Component {
             <div>
                 <div className={classes.toolbar}/>
                 <MenuList>
-
                     {routes.map((route, index) => (
                         <MenuItem className={classes.itens} component={Link} to={route.path}>
                             <IconButton>
                                 <i className={route.icon}></i>
                             </IconButton>
-
                             {route.name}
-
                         </MenuItem>
                     ))}
-
                 </MenuList>
             </div>
         );

@@ -5,14 +5,18 @@ import {
     FETCH_AND_SET_USERS,
     FETCH_SPECIFIC_USER_BEGIN,
     FETCH_SPECIFIC_USER_SUCCESS,
-    FETCH_SPECIFIC_USER_FAILURE
+    FETCH_SPECIFIC_USER_FAILURE,
+    REQ_INIT,
+    REQ_FAIL,
+    FETCH_POKE_SUCCESS
 } from '../actions/actions.js'
 
 const initialState = {
     items: [],
     loading: false,
-    error: null, 
-    current: []
+    error: null,
+    current: [],
+    poke: []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -50,7 +54,7 @@ export default function rootReducer(state = initialState, action) {
                 error: action.payload.error,
                 items: []
             };
-            
+
         case FETCH_SPECIFIC_USER_BEGIN:
             return {
 
@@ -74,7 +78,25 @@ export default function rootReducer(state = initialState, action) {
                 error: action.payload.error,
                 current: []
             };
-
+        case REQ_INIT:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
+        case REQ_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+        case FETCH_POKE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                poke: action.payload.POKE.results
+            };
         default:
             // ALWAYS
             return state;
